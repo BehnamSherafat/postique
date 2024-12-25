@@ -3,18 +3,102 @@
 <head>
   <title>My Awesome Website</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #myButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #openTabButton {
+      position: fixed;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      padding: 10px 15px;
+      background-color: #2E3A87;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px 0 0 5px;
+    }
+
+    #slidingTab {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #f8f8f8;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+      transition: right 0.3s ease-in-out;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    #slidingTab.active {
+      right: 0;
+    }
+
+    #slidingTab button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 14px;
+      background-color: #2E3A87;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #closeTabButton {
+      background-color: red;
+    }
+  </style>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var myButton = document.getElementById('myButton');
-       myButton.addEventListener('click', function() {
-       window.location.href = "https://www.example.com";
-       });
+      var openTabButton = document.getElementById('openTabButton');
+      var closeTabButton = document.getElementById('closeTabButton');
+      var slidingTab = document.getElementById('slidingTab');
+
+      myButton.addEventListener('click', function () {
+        window.location.href = "https://www.example.com";
+      });
+
+      openTabButton.addEventListener('click', function () {
+        slidingTab.classList.add('active');
+      });
+
+      closeTabButton.addEventListener('click', function () {
+        slidingTab.classList.remove('active');
+      });
     });
- </script>
+  </script>
 </head>
 <body>
   <h1>Welcome to My Site!</h1>
   <p>Click the button below to go to the app!</p>
   <button id="myButton">Go to App</button>
+
+  <!-- Button to Open the Sliding Tab -->
+  <button id="openTabButton">Open Menu</button>
+
+  <!-- Sliding Tab -->
+  <div id="slidingTab">
+    <button id="closeTabButton">Close</button>
+    <h3>Menu</h3>
+    <button onclick="alert('Feature 1 clicked!')">Feature 1</button>
+    <button onclick="alert('Feature 2 clicked!')">Feature 2</button>
+    <button onclick="alert('Feature 3 clicked!')">Feature 3</button>
+    <button onclick="alert('Settings clicked!')">Settings</button>
+  </div>
 </body>
 </html>
