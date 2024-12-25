@@ -1,104 +1,458 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Awesome Website</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPXLand Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a2e;
+            color: white;
+            display: flex;
+            height: 100vh;
+        }
 
-    #myButton {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background-color: #24243b;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-    #openTabButton {
-      position: fixed;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      padding: 10px 15px;
-      background-color: #2E3A87;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 5px 0 0 5px;
-    }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
 
-    #slidingTab {
-      position: fixed;
-      top: 0;
-      right: -300px;
-      width: 300px;
-      height: 100%;
-      background-color: #f8f8f8;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-      transition: right 0.3s ease-in-out;
-      overflow-y: auto;
-      padding: 20px;
-    }
+        .sidebar li {
+           margin-bottom: 10px;
+            display: flex;
+           align-items: center;
+           cursor: pointer;
+        }
+        
+        .sidebar li:hover {
+             background-color: #303047;
+             border-radius: 4px;
+         }
+         
+         .sidebar li i{
+             margin-right: 10px;
+         }
+        
+         .sidebar li.new::after{
+             content: 'NEW';
+             background-color: #3776f2;
+             color: white;
+             padding: 2px 4px;
+             border-radius: 4px;
+             margin-left: 5px;
+             font-size: 0.8rem;
+         }
 
-    #slidingTab.active {
-      right: 0;
-    }
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
 
-    #slidingTab button {
-      display: block;
-      margin: 10px 0;
-      padding: 10px;
-      width: 100%;
-      font-size: 14px;
-      background-color: #2E3A87;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        /* Header */
+        .header {
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+           padding-bottom: 20px;
+           border-bottom: 1px solid #303047;
+           margin-bottom: 20px;
+        }
+        
+        .header-search {
+           background-color: #303047;
+           border-radius: 4px;
+           padding: 10px 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-search input{
+           background-color: transparent;
+           border: none;
+           color: white;
+           margin-left: 5px;
+           outline: none;
+           font-size: 1rem;
+        }
+        
+        .header-icons{
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-icons i{
+             font-size: 1.5rem;
+             cursor: pointer;
+        }
+        
+        .header-icons i:first-child{
+             margin-right: 15px;
+        }
 
-    #closeTabButton {
-      background-color: red;
-    }
-  </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var myButton = document.getElementById('myButton');
-      var openTabButton = document.getElementById('openTabButton');
-      var closeTabButton = document.getElementById('closeTabButton');
-      var slidingTab = document.getElementById('slidingTab');
+        /* User Info */
+        .user-info {
+           display: flex;
+           background-color: #24243b;
+           border-radius: 4px;
+           padding: 15px;
+           margin-bottom: 20px;
+        }
+        .user-info-left{
+            display: flex;
+            flex-direction: column;
+            margin-left: 15px;
+        }
+        
+        .user-info img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+             margin-right: 15px;
+        }
+        
+        .user-info-left h2{
+          margin-bottom: 5px;
+        }
 
-      myButton.addEventListener('click', function () {
-        window.location.href = "https://www.example.com";
-      });
+        .user-info-left h2, .user-info-left p{
+            margin: 0;
+        }
 
-      openTabButton.addEventListener('click', function () {
-        slidingTab.classList.add('active');
-      });
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+           margin-bottom: 20px;
+        }
 
-      closeTabButton.addEventListener('click', function () {
-        slidingTab.classList.remove('active');
-      });
-    });
-  </script>
+        .stats-box {
+            background-color: #24243b;
+            padding: 15px;
+            border-radius: 4px;
+             display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .stats-box h4{
+           margin: 0;
+            color: #ccc;
+        }
+
+        .stats-box p {
+            margin: 0;
+            font-size: 1.2rem;
+             font-weight: bold;
+        }
+        
+       .stats-box .used-send{
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background-color: #24243b;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 300px;
+        }
+
+       .chart-section-navigation {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .chart-section-navigation button{
+             background-color: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 1rem;
+             border-bottom: 2px solid transparent;
+        }
+
+        .chart-section-navigation button.active{
+            border-bottom: 2px solid #3776f2;
+        }
+
+       .chart-section-chart{
+           flex: 1;
+            display: flex;
+            align-items: flex-end;
+           
+        }
+        
+       .chart-section-chart .bar-group{
+           margin-right: 10px;
+           display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+             align-items: center;
+             height: 100%;
+        }
+        
+        .chart-section-chart .bar-group .bar{
+             background-color: #ceb284;
+            width: 30px;
+            height: 0;
+            transition: height 0.4s ease;
+             
+        }
+        
+        .chart-section-chart .bar-group:nth-child(2) .bar{
+             background-color: #53aef4;
+        }
+         .chart-section-chart .bar-group:nth-child(3) .bar{
+             background-color: #6dd8d0;
+        }
+         .chart-section-chart .bar-group:nth-child(4) .bar{
+             background-color: #ceb284;
+        }
+        
+        .chart-section-chart .bar-group:nth-child(5) .bar{
+             background-color: #be73ec;
+        }
+        
+        .chart-section-chart .bar-group:nth-child(6) .bar{
+             background-color: #e553d5;
+        }
+        
+        .chart-section-chart .bar-group:nth-child(7) .bar{
+             background-color: #b4b3ef;
+        }
+         .chart-section-chart .bar-group:nth-child(8) .bar{
+             background-color: #ceb284;
+        }
+        
+        .chart-section-chart .bar-group span {
+           margin-top: 5px;
+           font-size: 0.8rem;
+           color: #ccc;
+        }
+        
+       .chart-section-chart-legend{
+           margin-bottom: 10px;
+           display: flex;
+            gap: 15px;
+        }
+        
+        .chart-section-chart-legend span{
+             display: flex;
+             align-items: center;
+        }
+       
+        .chart-section-chart-legend span i{
+            margin-right: 5px;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .chart-section-chart-legend span:first-child i{
+             background-color: #ceb284;
+        }
+        .chart-section-chart-legend span:nth-child(2) i{
+            background-color: #53aef4;
+        }
+        .chart-section-chart-legend span:nth-child(3) i{
+           background-color: #6dd8d0;
+        }
+         .chart-section-chart-legend span:last-child i{
+            background-color: #e553d5;
+        }
+
+    </style>
 </head>
 <body>
-  <h1>Welcome to My Site!</h1>
-  <p>Click the button below to go to the app!</p>
-  <button id="myButton">Go to App</button>
 
-  <!-- Button to Open the Sliding Tab -->
-  <button id="openTabButton">Open Menu</button>
+    <div class="sidebar">
+        <ul>
+            <li><i class="fas fa-search"></i>User Search</li>
+            <li>
+               <i class="fas fa-home"></i>
+                <span>Overview</span>
+            </li>
+             <li>
+                <i class="fas fa-search"></i>Properties Search
+            </li>
+            <li>
+                <i class="fas fa-exchange-alt"></i>Transactions
+            </li>
+            <li><i class="fas fa-chart-bar"></i>Statistics</li>
+             <li><i class="fas fa-list"></i> Listings <span class="new"></span></li>
+            <li><i class="fas fa-store"></i>My Listings<span class="new"></span></li>
+           
+            <li><i class="fas fa-store"></i>Stores</li>
+            <li><i class="fas fa-exchange-alt"></i>NFT Transactions</li>
+           
+            <li><i class="fas fa-paper-plane"></i>Find My Send</li>
+            <li><i class="fas fa-route"></i>Find My Travel Path</li>
+            <li><i class="fas fa-gem"></i>Treasure Hunting</li>
+           <li><i class="fas fa-clipboard-check"></i>Property Appraiser<span class="new"></span></li>
+             <li><i class="fas fa-chart-line"></i>Optimizer</li>
+            <li><i class="fas fa-users"></i>Users</li>
+            <li><i class="fas fa-building"></i>Properties</li>
+              <li><i class="fas fa-globe"></i>Upland</li>
+              <li><i class="fas fa-store-alt"></i>Our Devshops</li>
+             <li><i class="fas fa-wrench"></i>Troubleshoot</li>
+              <li><i class="fas fa-info-circle"></i>Imprint</li>
+              <li><i class="fas fa-user-shield"></i>Privacy Policy</li>
+        </ul>
+    </div>
 
-  <!-- Sliding Tab -->
-  <div id="slidingTab">
-    <button id="closeTabButton">Close</button>
-    <h3>Menu</h3>
-    <button onclick="alert('Feature 1 clicked!')">Feature 1</button>
-    <button onclick="alert('Feature 2 clicked!')">Feature 2</button>
-    <button onclick="alert('Feature 3 clicked!')">Feature 3</button>
-    <button onclick="alert('Settings clicked!')">Settings</button>
-  </div>
+    <div class="main-content">
+        <div class="header">
+             <div class="header-search">
+                 <i class="fas fa-search"></i>
+                 <input type="text" placeholder="Search users" />
+             </div>
+            <div class="header-icons">
+                <i class="fas fa-sun"></i>
+                 <i class="fas fa-sign-out-alt"></i>
+            </div>
+        </div>
+
+        <div class="user-info">
+           <img src="https://avatars.dicebear.com/api/pixel-art/behnamsh.svg" alt="User Avatar">
+            <div class="user-info-left">
+                <h2>behnamsh</h2>
+                <p>19607 KENO AVE, Queens <br/>HOLLISWOOD</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stats-box">
+                <h4>Networth</h4>
+                <p>1,870,276 UPX</p>
+            </div>
+             <div class="stats-box">
+                <h4>Current Balance</h4>
+                <p>246,210 UPX</p>
+            </div>
+            <div class="stats-box">
+                 <h4>Number of Properties</h4>
+                <p>67</p>
+            </div>
+              <div class="stats-box">
+                <h4>Total Value of Properties</h4>
+                <p>1,624,066 UPX</p>
+            </div>
+            <div class="stats-box">
+                <h4>Mint Value of Properties</h4>
+                <p>945,231 UPX</p>
+            </div>
+             <div class="stats-box">
+                <h4>Yield Per Month (without boost)</h4>
+                 <p>11,434 UPX</p>
+            </div>
+             <div class="stats-box">
+                 <h4>Used Sends</h4>
+                 <p>918 sends <span class="used-send">(27,915 UPX)</span></p>
+             </div>
+             
+              <div class="stats-box">
+                 <h4>Total UP2</h4>
+                 <p>3,903</p>
+             </div>
+             
+             <div class="stats-box">
+                 <h4>Total Sparklet</h4>
+                 <p>825</p>
+             </div>
+             <div class="stats-box">
+                 <h4>Staked Sparklet</h4>
+                 <p>0</p>
+             </div>
+        </div>
+
+        <div class="chart-section">
+           <div class="chart-section-navigation">
+                <button class="active">Properties</button>
+               <button>Transactions</button>
+                <button>Upland Assets</button>
+           </div>
+             <div class="chart-section-navigation">
+               <button class="active">City Chart</button>
+               <button>Neighborhood Chart</button>
+               <button>Progress Chart</button>
+               <button>Map of Properties</button>
+           </div>
+           
+            <div class="chart-section-chart">
+               <div class="bar-group">
+                    <div class="bar" style="height: 60%"></div>
+                     <span>Berlin</span>
+               </div>
+               <div class="bar-group">
+                    <div class="bar" style="height: 25%"></div>
+                     <span>Bronx</span>
+               </div>
+                <div class="bar-group">
+                    <div class="bar" style="height: 10%"></div>
+                    <span>Chicago</span>
+               </div>
+               <div class="bar-group">
+                   <div class="bar" style="height: 50%"></div>
+                     <span>Detroit</span>
+               </div>
+               <div class="bar-group">
+                   <div class="bar" style="height: 5%"></div>
+                    <span>Las Vegas</span>
+               </div>
+               <div class="bar-group">
+                  <div class="bar" style="height: 15%"></div>
+                     <span>Manhattan</span>
+               </div>
+               <div class="bar-group">
+                  <div class="bar" style="height: 80%"></div>
+                    <span>Queens</span>
+               </div>
+                <div class="bar-group">
+                    <div class="bar" style="height: 10%"></div>
+                     <span>Rio de Janeiro</span>
+                </div>
+           </div>
+            <div class="chart-section-chart-legend">
+                <span><i ></i>Properties</span>
+                <span><i ></i>Networth</span>
+                <span><i ></i>Mint-Networth</span>
+                 <span><i ></i>UP2</span>
+            </div>
+           
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll(".chart-section-navigation button").forEach(button => {
+          button.addEventListener("click", function(){
+            document.querySelectorAll(".chart-section-navigation button").forEach(btn => {
+              btn.classList.remove("active");
+             });
+            button.classList.add("active");
+          });
+        });
+    </script>
 </body>
 </html>
